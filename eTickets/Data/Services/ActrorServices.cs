@@ -13,14 +13,19 @@ namespace eTickets.Data.Services
         {
             _context = context;
         }
-        public void Add(Actor actor)
+        public async Task AddAsync(Actor actor)
         {
-            throw new System.NotImplementedException();
+            await _context.AddAsync(actor);
+            await _context.SaveChangesAsync();
+            //throw new System.NotImplementedException();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var resilt = await _context.Actors.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Actors.Remove(resilt);
+            await _context.SaveChangesAsync(); 
+            //throw new System.NotImplementedException();
         }
 
         public async Task<IEnumerable<Actor>> GetAll()
@@ -31,14 +36,19 @@ namespace eTickets.Data.Services
             //throw new System.NotImplementedException();
         }
 
-        public Actor GetById(int id)
+        public async Task<Actor> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var resilt = await _context.Actors.FirstOrDefaultAsync(x => x.Id == id);
+            return resilt;
+            //throw new System.NotImplementedException();
         }
 
-        public Actor Update(int id, Actor newActor)
+        public async Task<Actor> UpdateAsync(int id, Actor newActor)
         {
-            throw new System.NotImplementedException();
+            _context.Update(newActor);
+            await _context.SaveChangesAsync();
+            return newActor;    
+            //throw new System.NotImplementedException();
         }
     }
 }
